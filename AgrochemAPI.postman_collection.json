@@ -1,0 +1,961 @@
+{
+  "info": {
+    "name": "Agrochem Production API",
+    "description": "API для управления производством средств защиты растений\n\nОснован на требованиях технического задания.\n\n## Возможности:\n- Авторизация и регистрация пользователей\n- Управление рецептурами и технологическими картами\n- Сопровождение производственных партий\n- Ввод фактических данных цехом\n- Лабораторные испытания\n- Фиксация отклонений и уведомлений\n\n## Как использовать:\n1. Сначала выполните POST /api/Auth/login для получения токена\n2. Скопируйте полученный токен\n3. Нажмите кнопку \"Authorization\" и выберите тип \"Bearer Token\"\n4. Вставьте токен и нажмите \"Send\" для защищённых запросов",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "agrochem"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "description": "Авторизация и регистрация пользователей",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"tech.ivanov\",\n  \"password\": \"123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/Auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Auth", "login"]
+            },
+            "description": "Вход в систему. Возвращает JWT-токен для дальнейших запросов."
+          },
+          "response": []
+        },
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"new.operator\",\n  \"fullName\": \"Новый Оператор\",\n  \"email\": \"operator@test.ru\",\n  \"password\": \"123\",\n  \"role\": \"operator\",\n  \"department\": \"Цех №1\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/Auth/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Auth", "register"]
+            },
+            "description": "Регистрация нового пользователя."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Reference",
+      "description": "Справочная информация (продукты, сырьё, оборудование, пользователи)",
+      "item": [
+        {
+          "name": "Get All Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/Reference/products",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Reference", "products"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Active Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/Reference/products/active",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Reference", "products", "active"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Raw Materials",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/Reference/raw-materials",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Reference", "raw-materials"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Equipment",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/Reference/equipment",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Reference", "equipment"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/Reference/users",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Reference", "users"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Dashboard Stats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/Reference/dashboard",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Reference", "dashboard"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Batches",
+      "description": "Управление производственными партиями",
+      "item": [
+        {
+          "name": "Get All Batches",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/Batches",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Batches"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Active Batches",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/Batches/active",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Batches", "active"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Batch By Id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/Batches/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Batches", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Batch",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"batchNumber\": \"B-TEST-01\",\n  \"orderId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/Batches",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Batches"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Start Batch",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"batchId\": 3,\n  \"userId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/Batches/start",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Batches", "start"]
+            },
+            "description": "Запускает партию. Вызывает хранимую процедуру sp_start_production_batch."
+          },
+          "response": []
+        },
+        {
+          "name": "Complete Batch",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"batchId\": 3,\n  \"userId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/Batches/complete",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Batches", "complete"]
+            },
+            "description": "Завершает партию. Вызывает хранимую процедуру sp_complete_batch_with_lab_check. Требует наличия лабораторного решения."
+          },
+          "response": []
+        },
+        {
+          "name": "Get Dashboard Stats",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/Batches/dashboard",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Batches", "dashboard"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Recipes",
+      "description": "Управление рецептурами",
+      "item": [
+        {
+          "name": "Get All Recipes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/Recipes",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Recipes"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Recipe By Id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/Recipes/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Recipes", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Recipe",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": 1,\n  \"version\": 2,\n  \"createdBy\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/Recipes",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Recipes"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add Component to Recipe",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rawMaterialId\": 1,\n  \"percentage\": 50,\n  \"tolerance\": 1,\n  \"orderNum\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/Recipes/1/components",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Recipes", "1", "components"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Approve Recipe",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "1"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/Recipes/1/approve",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Recipes", "1", "approve"]
+            },
+            "description": "Утверждение рецептуры. При сумме компонентов ≠ 100% триггер БД вернёт ошибку."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "TechCards",
+      "description": "Управление технологическими картами",
+      "item": [
+        {
+          "name": "Get All TechCards",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/TechCards",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "TechCards"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get TechCard By Id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/TechCards/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "TechCards", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create TechCard",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": 1,\n  \"version\": 1,\n  \"createdBy\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/TechCards",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "TechCards"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add Step to TechCard",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"stepType\": \"Смешивание\",\n  \"orderNum\": 1,\n  \"isMandatory\": true,\n  \"instructions\": \"Смешать компоненты в течение 15 минут\",\n  \"plannedParams\": \"{\\\"temperature\\\":180,\\\"pressure\\\":2.5}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/TechCards/1/steps",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "TechCards", "1", "steps"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Approve TechCard",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "1"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/TechCards/1/approve",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "TechCards", "1", "approve"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "ProductionOrders",
+      "description": "Управление производственными заказами",
+      "item": [
+        {
+          "name": "Get All Orders",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/ProductionOrders",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "ProductionOrders"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Order By Id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/ProductionOrders/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "ProductionOrders", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": 1,\n  \"recipeId\": 1,\n  \"techCardId\": 1,\n  \"plannedQty\": 1000\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/ProductionOrders",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "ProductionOrders"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Cancel Order",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/ProductionOrders/1/cancel",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "ProductionOrders", "1", "cancel"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "BatchSteps",
+      "description": "Ввод фактических данных цехом (аппаратчик)",
+      "item": [
+        {
+          "name": "Get Steps by Batch",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/BatchSteps/batch/3",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "BatchSteps", "batch", "3"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Current Step",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/BatchSteps/batch/3/current",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "BatchSteps", "batch", "3", "current"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Start Step",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"batchId\": 3,\n  \"stepId\": 1,\n  \"userId\": 5\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/BatchSteps/start",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "BatchSteps", "start"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Step Params",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"executionId\": 1,\n  \"userId\": 5,\n  \"actualParams\": \"{\\\"temperature\\\":185,\\\"pressure\\\":2.5}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/BatchSteps/params",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "BatchSteps", "params"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Complete Step",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"executionId\": 1,\n  \"userId\": 5,\n  \"actualParams\": \"{\\\"temperature\\\":185,\\\"pressure\\\":2.5}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/BatchSteps/complete",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "BatchSteps", "complete"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Batch Progress",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/BatchSteps/batch/3/progress",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "BatchSteps", "batch", "3", "progress"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "LabTests",
+      "description": "Лабораторные испытания",
+      "item": [
+        {
+          "name": "Get All Tests",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/LabTests",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "LabTests"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Pending Raw Materials",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/LabTests/pending/raw-materials",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "LabTests", "pending", "raw-materials"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Pending Batches",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/LabTests/pending/batches",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "LabTests", "pending", "batches"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Lab Test",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"objectType\": \"production_batch\",\n  \"objectId\": 3,\n  \"testType\": \"Контроль качества\",\n  \"createdBy\": 10,\n  \"comment\": \"Проверка соответствия ТУ\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/LabTests",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "LabTests"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Add Parameters to Test",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  { \"parameterName\": \"Массовая доля\", \"normMin\": 45, \"normMax\": 55 },\n  { \"parameterName\": \"pH\", \"normMin\": 6.5, \"normMax\": 7.5 }\n]"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/LabTests/1/parameters",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "LabTests", "1", "parameters"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Enter Test Results",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"testId\": 1,\n  \"userId\": 10,\n  \"parameters\": [\n    { \"id\": 1, \"actualValue\": 52.3 },\n    { \"id\": 2, \"actualValue\": 7.1 }\n  ],\n  \"comment\": \"Результаты в норме\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/LabTests/results",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "LabTests", "results"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Make Decision",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"testId\": 1,\n  \"userId\": 10,\n  \"result\": \"approved\",\n  \"comment\": \"Соответствует нормативам\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/LabTests/decision",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "LabTests", "decision"]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Deviations",
+      "description": "Отклонения, события и уведомления",
+      "item": [
+        {
+          "name": "Get All Deviations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/Deviations",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Deviations"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Deviations by Batch",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/Deviations/batch/3",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Deviations", "batch", "3"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Deviation",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"batchId\": 3,\n  \"stepId\": 1,\n  \"parameter\": \"Температура экструдера\",\n  \"plannedValue\": \"180-190\",\n  \"actualValue\": \"195\",\n  \"severity\": \"critical\",\n  \"comment\": \"Превышение температуры в зоне 1\",\n  \"userId\": 5\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/Deviations",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Deviations"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Deviation Statistics",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/Deviations/statistics",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Deviations", "statistics"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get User Notifications",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/Deviations/notifications/user/1?unreadOnly=false",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Deviations", "notifications", "user", "1"],
+              "query": [
+                {
+                  "key": "unreadOnly",
+                  "value": "false"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Unread Count",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/Deviations/notifications/unread/count/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Deviations", "notifications", "unread", "count", "1"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Mark Notification as Read",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"notificationId\": 1,\n  \"userId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/Deviations/notifications/read",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Deviations", "notifications", "read"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Events",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/Deviations/events",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Deviations", "events"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Events by Batch",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/Deviations/events/batch/3",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Deviations", "events", "batch", "3"]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Event",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"batchId\": 3,\n  \"eventType\": \"step_completed\",\n  \"description\": \"Шаг смешивания завершён\",\n  \"userId\": 5\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/Deviations/events",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "Deviations", "events"]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://localhost:7093",
+      "type": "string"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    }
+  ]
+}
