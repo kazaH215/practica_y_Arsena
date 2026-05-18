@@ -1,0 +1,83 @@
+﻿<Window x:Class="AgrochemOperator.Views.LoginView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Агрохим · Оператор" Height="550" Width="480"
+        WindowStartupLocation="CenterScreen" ResizeMode="NoResize"
+        Background="#0F172A">
+
+    <Window.Resources>
+        <SolidColorBrush x:Key="PrimaryAccent" Color="#0EA5E9"/>
+        <SolidColorBrush x:Key="SurfaceColor" Color="#1E293B"/>
+        <SolidColorBrush x:Key="TextPrimary" Color="#F8FAFC"/>
+        <SolidColorBrush x:Key="TextSecondary" Color="#94A3B8"/>
+
+        <Style TargetType="TextBox" x:Key="LoginTextBox">
+            <Setter Property="Background" Value="#334155"/>
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+            <Setter Property="BorderBrush" Value="#475569"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+        <Style TargetType="PasswordBox" x:Key="LoginPasswordBox">
+            <Setter Property="Background" Value="#334155"/>
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}"/>
+            <Setter Property="BorderBrush" Value="#475569"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="Padding" Value="10,8"/>
+            <Setter Property="FontSize" Value="14"/>
+        </Style>
+        <Style TargetType="Button" x:Key="LoginButton">
+            <Setter Property="Background" Value="{StaticResource PrimaryAccent}"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="16,10"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="380"/>
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="0" Background="#0F172A">
+            <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center" Margin="30">
+                <TextBlock Text="⚙️" FontSize="64" Foreground="{StaticResource PrimaryAccent}" HorizontalAlignment="Center"/>
+                <TextBlock Text="АГРОХИМ" FontSize="28" FontWeight="Bold" Foreground="White" HorizontalAlignment="Center" Margin="0,20,0,10"/>
+                <TextBlock Text="Цех · Линия экструдера" FontSize="14" Foreground="{StaticResource TextSecondary}" HorizontalAlignment="Center"/>
+                <Line X1="0" Y1="0" X2="200" Y2="0" Stroke="#334155" StrokeThickness="1" Margin="0,30,0,0" HorizontalAlignment="Center"/>
+                <TextBlock Text="Оператор" FontSize="16" Foreground="{StaticResource PrimaryAccent}" HorizontalAlignment="Center" Margin="0,20,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Column="1" Background="{StaticResource SurfaceColor}" CornerRadius="20" Margin="20">
+            <Grid Margin="25,35">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" Text="Вход в систему" FontSize="22" FontWeight="Bold" Foreground="{StaticResource TextPrimary}" HorizontalAlignment="Center" Margin="0,0,0,25"/>
+
+                <TextBlock Grid.Row="1" Text="Логин" FontSize="13" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,5"/>
+                <TextBox Grid.Row="2" x:Name="txtUsername" Style="{StaticResource LoginTextBox}"/>
+
+                <TextBlock Grid.Row="3" Text="Пароль" FontSize="13" Foreground="{StaticResource TextSecondary}" Margin="0,15,0,5"/>
+                <PasswordBox Grid.Row="4" x:Name="txtPassword" Style="{StaticResource LoginPasswordBox}"/>
+
+                <TextBlock Grid.Row="5" x:Name="lblError" Foreground="#EF4444" FontSize="12" TextWrapping="Wrap" HorizontalAlignment="Center" Margin="0,15,0,0"/>
+
+                <Button Grid.Row="6" x:Name="btnLogin" Content="ВОЙТИ" Style="{StaticResource LoginButton}" Margin="0,20,0,10" Click="BtnLogin_Click"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
