@@ -1,0 +1,26 @@
+﻿using System;
+using System.Globalization;
+using System.Windows.Data;
+using System.Windows.Media;
+
+namespace AgrochemLaboratory.Converters
+{
+    public class BoolToColorConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            if (value is bool boolValue)
+            {
+                return boolValue
+                    ? new SolidColorBrush((Color)ColorConverter.ConvertFromString("#22C55E"))
+                    : new SolidColorBrush((Color)ColorConverter.ConvertFromString("#EF4444"));
+            }
+            return new SolidColorBrush(Colors.Gray);
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+}
