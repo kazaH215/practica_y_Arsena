@@ -1,0 +1,94 @@
+﻿<Window x:Class="AgrochemLaboratory.Views.LabTestPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="🔬 Лабораторное испытание" Height="656" Width="1119"
+        WindowStartupLocation="CenterOwner" ResizeMode="CanResize"
+        Background="{StaticResource BackgroundDark}">
+
+    <Window.Resources>
+        <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}"/>
+        <Style TargetType="PasswordBox" BasedOn="{StaticResource {x:Type PasswordBox}}"/>
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="🔬 Лабораторное испытание" FontSize="22" FontWeight="Bold" Foreground="{StaticResource TextPrimary}" Margin="0,0,0,15"/>
+        <Separator Grid.Row="1" Margin="0,0,0,15" Background="#3F3F55"/>
+
+        <Border Grid.Row="2" Background="{StaticResource SurfaceColor}" CornerRadius="12" Padding="15" Margin="0,0,0,15">
+            <StackPanel>
+                <TextBlock x:Name="lblObjectInfo" Text="Загрузка..." FontWeight="SemiBold" FontSize="14" Foreground="{StaticResource TextPrimary}"/>
+                <TextBlock x:Name="lblTestStatus" Text="Статус: " FontSize="12" Foreground="{StaticResource TextSecondary}" Margin="0,5,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <TextBlock Grid.Row="3" Text="📋 Контролируемые параметры" FontWeight="SemiBold" Foreground="{StaticResource TextPrimary}" Margin="0,0,0,10"/>
+
+        <Border Grid.Row="4" Background="{StaticResource SurfaceColor}" CornerRadius="12" Padding="15" Margin="0,0,0,15">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                </Grid.RowDefinitions>
+
+                <!-- Заголовки -->
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="Параметр" FontWeight="Bold" Foreground="{StaticResource TextSecondary}" VerticalAlignment="Center"/>
+                <TextBlock Grid.Row="0" Grid.Column="1" Text="Норма" FontWeight="Bold" Foreground="{StaticResource TextSecondary}" VerticalAlignment="Center"/>
+                <TextBlock Grid.Row="0" Grid.Column="2" Text="Факт" FontWeight="Bold" Foreground="{StaticResource TextSecondary}" VerticalAlignment="Center"/>
+                <TextBlock Grid.Row="0" Grid.Column="3" Text="Результат" FontWeight="Bold" Foreground="{StaticResource TextSecondary}" VerticalAlignment="Center"/>
+
+                <!-- Параметр 1 -->
+                <TextBlock Grid.Row="1" Grid.Column="0" Text="Внешний вид" VerticalAlignment="Center" Foreground="{StaticResource TextPrimary}"/>
+                <TextBlock Grid.Row="1" Grid.Column="1" Text="прозрачный" VerticalAlignment="Center" Foreground="{StaticResource TextSecondary}"/>
+                <TextBox x:Name="txtParam1" Grid.Row="1" Grid.Column="2" Width="120" Height="32" VerticalAlignment="Center"/>
+                <TextBlock x:Name="lblResult1" Grid.Row="1" Grid.Column="3" VerticalAlignment="Center" FontSize="16"/>
+
+                <!-- Параметр 2 -->
+                <TextBlock Grid.Row="2" Grid.Column="0" Text="pH" VerticalAlignment="Center" Foreground="{StaticResource TextPrimary}"/>
+                <TextBlock Grid.Row="2" Grid.Column="1" Text="6.5 – 7.5" VerticalAlignment="Center" Foreground="{StaticResource TextSecondary}"/>
+                <TextBox x:Name="txtParam2" Grid.Row="2" Grid.Column="2" Width="120" Height="32" VerticalAlignment="Center" TextChanged="TxtParam_TextChanged"/>
+                <TextBlock x:Name="lblResult2" Grid.Row="2" Grid.Column="3" VerticalAlignment="Center" FontSize="16"/>
+
+                <!-- Параметр 3 -->
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Плотность, г/см³" VerticalAlignment="Center" Foreground="{StaticResource TextPrimary}"/>
+                <TextBlock Grid.Row="3" Grid.Column="1" Text="1.05 – 1.15" VerticalAlignment="Center" Foreground="{StaticResource TextSecondary}"/>
+                <TextBox x:Name="txtParam3" Grid.Row="3" Grid.Column="2" Width="120" Height="32" VerticalAlignment="Center" TextChanged="TxtParam_TextChanged"/>
+                <TextBlock x:Name="lblResult3" Grid.Row="3" Grid.Column="3" VerticalAlignment="Center" FontSize="16"/>
+            </Grid>
+        </Border>
+
+        <TextBox Grid.Row="5" x:Name="txtComment" Height="70" TextWrapping="Wrap" AcceptsReturn="True"
+                 VerticalScrollBarVisibility="Auto" Margin="0,0,0,15" Padding="10"
+                 Text="Введите комментарий (при блокировке обязательно)"
+                 Foreground="{StaticResource TextSecondary}"/>
+
+        <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="📄 Протокол" Width="139" Height="35"
+                    Style="{StaticResource SecondaryButton}" Click="BtnGenerateReport_Click"/>
+            <Button x:Name="btnSaveResults" Content="💾 Сохранить результаты" Width="194" Height="35" Margin="0,0,10,0"
+                    Style="{StaticResource PrimaryButton}" Click="BtnSaveResults_Click"/>
+            <Button x:Name="btnApprove" Content="✅ Одобрить" Width="136" Height="35" Margin="0,0,10,0"
+                    Style="{StaticResource PrimaryButton}" Click="BtnApprove_Click"/>
+            <Button x:Name="btnReject" Content="❌ Заблокировать" Width="153" Height="35" Margin="0,0,10,0"
+                    Style="{StaticResource PrimaryButton}" Click="BtnReject_Click" Cursor="Hand"/>
+            <Button Content="✖️ Отмена" Width="112" Height="35" Style="{StaticResource SecondaryButton}" Click="BtnCancel_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>

@@ -1,0 +1,66 @@
+﻿<Page x:Class="AgrochemLaboratory.Views.ProductionBatchesPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Партии продукции" Background="{StaticResource BackgroundDark}" Height="671" Width="1200">
+
+    <Grid Margin="25">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+            <TextBlock Text="🏭 Партии продукции" FontSize="24" FontWeight="SemiBold" Foreground="{StaticResource TextPrimary}"/>
+            <TextBlock Text="Готовая продукция, ожидающая лабораторного анализа" FontSize="14" Foreground="{StaticResource TextSecondary}" Margin="0,5,0,0"/>
+        </StackPanel>
+
+        <Border Grid.Row="1" Background="{StaticResource SurfaceColor}" CornerRadius="12" Padding="15" Margin="0,0,0,20">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="🔍 Поиск:" VerticalAlignment="Center" Foreground="{StaticResource TextSecondary}" Margin="0,0,10,0"/>
+                <TextBox Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" Width="200" Height="32"/>
+                <Button Content="⟳ Обновить" Command="{Binding RefreshCommand}" Width="117" Height="32" Margin="10,0,0,0"
+                        Style="{StaticResource PrimaryButton}"/>
+            </StackPanel>
+        </Border>
+
+        <Border Grid.Row="2" Background="{StaticResource SurfaceColor}" CornerRadius="12" Padding="15" Margin="0,0,0,20"
+                Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibility}}">
+            <TextBlock Text="⏳ Загрузка данных..." HorizontalAlignment="Center" Foreground="{StaticResource TextSecondary}"/>
+        </Border>
+
+        <DataGrid Grid.Row="3" ItemsSource="{Binding Batches}" AutoGenerateColumns="False" IsReadOnly="True"
+                  SelectionMode="Single" SelectedItem="{Binding SelectedBatch}"
+                  Visibility="{Binding IsLoading, Converter={StaticResource InverseBooleanToVisibility}}" Margin="0,0,0,105">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="50"/>
+                <DataGridTextColumn Header="Номер партии" Binding="{Binding Number}" Width="130"/>
+                <DataGridTextColumn Header="Продукт" Binding="{Binding Name}" Width="*"/>
+                <DataGridTextColumn Header="Кол-во" Binding="{Binding Quantity}" Width="80"/>
+                <DataGridTextColumn Header="Дата завершения" Binding="{Binding Date}" Width="140"/>
+                <DataGridTemplateColumn Header="Статус" Width="100">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Border CornerRadius="20" Padding="8,4" Background="{Binding CurrentStatus, Converter={StaticResource StatusToColor}}">
+                                <TextBlock Text="{Binding CurrentStatus}" Foreground="White" FontSize="11" HorizontalAlignment="Center"/>
+                            </Border>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <Border Grid.Row="3" Background="{StaticResource SurfaceColor}" CornerRadius="12" Padding="30"
+                Visibility="{Binding HasNoData, Converter={StaticResource BooleanToVisibility}}" Margin="0,192,0,319">
+            <TextBlock Text="📭 Нет партий продукции, ожидающих анализа" HorizontalAlignment="Center" Foreground="{StaticResource TextSecondary}" FontSize="14"/>
+        </Border>
+
+        <Border Grid.Row="3" Background="{StaticResource SurfaceColor}" CornerRadius="12" Padding="15" Margin="0,231,0,0"
+                BorderBrush="#3F3F55" BorderThickness="1" Height="115" VerticalAlignment="Top">
+            <Button Content="🔬 Начать испытание" Command="{Binding StartTestCommand}" 
+                    Width="160" Height="34" Style="{StaticResource PrimaryButton}"
+                    IsEnabled="{Binding SelectedBatch, Converter={StaticResource ObjectToBoolean}}"/>
+        </Border>
+    </Grid>
+</Page>
