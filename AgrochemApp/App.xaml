@@ -1,0 +1,13 @@
+﻿<Application x:Class="AgrochemApp.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="clr-namespace:AgrochemApp.Converters"
+             StartupUri="Views/LoginView.xaml">
+    <Application.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibility"/>
+        <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibility"/>
+        <converters:ObjectToBooleanConverter x:Key="ObjectToBoolean"/>
+        <converters:StatusToColorConverter x:Key="StatusToColor"/>
+        <converters:PercentToColorConverter x:Key="PercentToColor"/>
+    </Application.Resources>
+</Application>
