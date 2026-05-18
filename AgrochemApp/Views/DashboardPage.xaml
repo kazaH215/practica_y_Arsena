@@ -1,0 +1,37 @@
+﻿<Page x:Class="AgrochemApp.Views.DashboardPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      Title="Дашборд" Background="#F8FAFC">
+
+    <ScrollViewer>
+        <StackPanel Margin="0,0,0,20">
+            <TextBlock Text="📊 Обзор производства" FontSize="22" FontWeight="SemiBold" 
+                       Foreground="#0F172A" Margin="0,0,0,5"/>
+            <TextBlock Text="Актуальные показатели на сегодня" FontSize="13" 
+                       Foreground="#64748B" Margin="0,0,0,25"/>
+
+            <!-- Карточки статистики -->
+            <WrapPanel x:Name="StatsPanel" Margin="0,0,0,30"/>
+
+            <!-- Последние события -->
+            <TextBlock Text="📋 Последние события" FontSize="16" FontWeight="SemiBold" 
+                       Foreground="#1E293B" Margin="0,0,0,12"/>
+
+            <Border Background="White" CornerRadius="12" Padding="0" 
+                    BorderBrush="#E2E8F0" BorderThickness="1">
+                <ListBox x:Name="EventsList" Height="220" BorderThickness="0" Padding="8">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}" Margin="0,6" Foreground="#334155" FontSize="12"/>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Border>
+
+            <!-- Индикатор загрузки -->
+            <TextBlock x:Name="LoadingText" Text="⏳ Загрузка данных..." 
+                       Foreground="#64748B" FontSize="13" 
+                       HorizontalAlignment="Center" Margin="0,30,0,0"/>
+        </StackPanel>
+    </ScrollViewer>
+</Page>
